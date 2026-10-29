@@ -70,7 +70,7 @@ export function DailyStretchModal({ onClose, onCompleted }: DailyStretchModalPro
                 11:35 AM DAILY
               </span>
             </div>
-            <h2 style={{ fontSize: '1.25rem', marginTop: '2px', color: '#ffffff' }}>7-Minute Stretch Routine</h2>
+            <h2 style={{ fontSize: '1.25rem', marginTop: '2px', color: 'var(--text-primary)' }}>7-Minute Stretch Routine</h2>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -94,10 +94,10 @@ export function DailyStretchModal({ onClose, onCompleted }: DailyStretchModalPro
         {isFinished ? (
           <div style={{ textAlign: 'center', padding: '24px 8px' }}>
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--accent-green)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px auto' }}>
-              <CheckCircle2 size={32} color="#000" strokeWidth={2.5} />
+              <CheckCircle2 size={32} color="#FFFFFF" strokeWidth={2.5} />
             </div>
 
-            <h3 style={{ fontSize: '1.4rem', marginBottom: '6px' }}>SPINE DECOMPRESSED</h3>
+            <h3 style={{ fontSize: '1.4rem', marginBottom: '6px', color: 'var(--text-primary)' }}>SPINE DECOMPRESSED</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', marginBottom: '18px' }}>
               Postural tension relieved. Spine restored to maximum natural upright height.
             </p>
@@ -125,7 +125,7 @@ export function DailyStretchModal({ onClose, onCompleted }: DailyStretchModalPro
                     flex: 1,
                     height: '3px',
                     borderRadius: '2px',
-                    background: idx === currentIdx ? '#ffffff' : idx < currentIdx ? 'var(--accent-green)' : '#222222'
+                    background: idx === currentIdx ? 'var(--accent-red)' : idx < currentIdx ? 'var(--accent-green)' : 'var(--border-subtle)'
                   }}
                 />
               ))}
@@ -137,7 +137,7 @@ export function DailyStretchModal({ onClose, onCompleted }: DailyStretchModalPro
                 STRETCH {currentIdx + 1} OF {DAILY_STRETCHES.length} • {currentStretch.targetArea}
               </div>
 
-              <h3 style={{ fontSize: '1.4rem', margin: '4px 0 6px 0', color: '#ffffff' }}>
+              <h3 style={{ fontSize: '1.4rem', margin: '4px 0 6px 0', color: 'var(--text-primary)' }}>
                 {currentStretch.name}
               </h3>
 
@@ -160,8 +160,8 @@ export function DailyStretchModal({ onClose, onCompleted }: DailyStretchModalPro
               </div>
 
               {/* Instructions */}
-              <div className="min-subcard" style={{ textAlign: 'left', marginTop: '12px' }}>
-                <div style={{ fontSize: '0.72rem', color: '#ffffff', fontWeight: 800, marginBottom: '3px' }}>
+              <div style={{ textAlign: 'left', marginTop: '12px', background: 'var(--bg-subcard)', padding: '12px', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-primary)', fontWeight: 800, marginBottom: '3px' }}>
                   INSTRUCTION:
                 </div>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.4, marginBottom: '6px' }}>

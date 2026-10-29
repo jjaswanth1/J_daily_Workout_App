@@ -21,6 +21,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>('dashboard');
   const [appState, setAppState] = useState<AppStoredState>(DEFAULT_APP_STATE);
   const [isClient, setIsClient] = useState(false);
+  const [theme, setTheme] = useState<'black' | 'white'>('white');
 
   // Active Live Workout Companion Modal
   const [activeLiveWorkout, setActiveLiveWorkout] = useState<{
@@ -32,12 +33,37 @@ export default function Home() {
   // Active Daily Stretch Routine Modal
   const [isStretchModalOpen, setIsStretchModalOpen] = useState(false);
 
-  // Load state on client mount
+  // Load state & theme on client mount
   useEffect(() => {
     const loaded = loadStoredState();
     setAppState(loaded);
     setIsClient(true);
+
+    try {
+      const savedTheme = localStorage.getItem('titan_theme');
+      if (savedTheme === 'black' || savedTheme === 'dark') {
+        setTheme('black');
+        document.documentElement.setAttribute('data-theme', 'black');
+      } else if (savedTheme === 'white' || savedTheme === 'light') {
+        setTheme('white');
+        document.documentElement.setAttribute('data-theme', 'white');
+      } else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initial = prefersDark ? 'black' : 'white';
+        setTheme(initial);
+        document.documentElement.setAttribute('data-theme', initial);
+      }
+    } catch {}
   }, []);
+
+  const handleToggleTheme = () => {
+    const nextTheme = theme === 'black' ? 'white' : 'black';
+    setTheme(nextTheme);
+    try {
+      localStorage.setItem('titan_theme', nextTheme);
+      document.documentElement.setAttribute('data-theme', nextTheme);
+    } catch {}
+  };
 
   // Save state on updates
   useEffect(() => {
@@ -218,6 +244,8 @@ export default function Home() {
         onSelectTab={setActiveTab}
         onStartLiveWorkout={handleStartTodayWorkout}
         currentWeek={appState.currentWeek}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main View Port */}

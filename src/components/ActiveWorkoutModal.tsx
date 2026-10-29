@@ -126,7 +126,7 @@ export function ActiveWorkoutModal({
                 WEEK {weekNumber} • {workout.day.toUpperCase()}
               </span>
             </div>
-            <h2 style={{ fontSize: '1.25rem', marginTop: '2px', color: '#ffffff' }}>{workout.title}</h2>
+            <h2 style={{ fontSize: '1.25rem', marginTop: '2px', color: 'var(--text-primary)' }}>{workout.title}</h2>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -153,15 +153,15 @@ export function ActiveWorkoutModal({
         {isCompleted ? (
           <div style={{ textAlign: 'center', padding: '24px 8px' }}>
             <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'var(--accent-green)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto' }}>
-              <CheckCircle2 size={34} color="#000" strokeWidth={2.5} />
+              <CheckCircle2 size={34} color="#FFFFFF" strokeWidth={2.5} />
             </div>
 
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '6px' }}>SESSION COMPLETE</h2>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '6px', color: 'var(--text-primary)' }}>SESSION COMPLETE</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', marginBottom: '18px' }}>
               Duration: <strong className="timer-green">{formatTime(sessionSeconds)}</strong>
             </p>
 
-            <div className="min-subcard" style={{ textAlign: 'left', marginBottom: '20px', borderColor: '#333' }}>
+            <div style={{ textAlign: 'left', marginBottom: '20px', background: 'var(--bg-subcard)', border: '1px solid var(--border-subtle)', borderRadius: '14px', padding: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-red)', fontWeight: 800, fontSize: '0.8rem', marginBottom: '4px' }}>
                 <Sparkles size={15} /> RECOVERY PROTEIN WINDOW
               </div>

@@ -27,10 +27,30 @@ export function PwaManager() {
       return;
     }
 
-    // Register Service Worker
+    // Clean up lingering service workers on localhost / dev environments
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then((keys) => {
+          keys.forEach((key) => {
+            if (key.includes('titan-recomp')) caches.delete(key);
+          });
+        });
+      }
+    }
+
+    // Register Service Worker in production
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch((err) => {
+        navigator.serviceWorker.register('/sw.js').then((registration) => {
+          registration.update().catch(() => {});
+        }).catch((err) => {
           console.log('SW registration error:', err);
         });
       });

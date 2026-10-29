@@ -63,7 +63,7 @@ export function StretchView({ onStartStretchSession }: StretchViewProps) {
         </div>
 
         {showScienceNote && (
-          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: '10px' }}>
               At age 24, growth plates are closed. These stretches do not grow bone, but decompressing spinal discs reveals real hidden height, decompresses vertebrae, and bulletproofs posture against desk hunching.
             </p>
@@ -145,7 +145,7 @@ export function StretchView({ onStartStretchSession }: StretchViewProps) {
 
                 {/* Dropdown Content */}
                 {isExpanded && (
-                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
                     <div style={{ marginTop: '12px' }}>
                       <HumanExerciseVisualizer
                         exerciseId={s.id}

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'titan-recomp-pwa-v1';
+const CACHE_NAME = 'titan-recomp-pwa-v2';
 
 const STATIC_ASSETS = [
   '/',
@@ -8,18 +8,19 @@ const STATIC_ASSETS = [
   '/icons/apple-touch-icon.png'
 ];
 
-// Install: Cache core app shell
+// Install: Cache core assets and activate immediately
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(STATIC_ASSETS).catch((err) => {
         console.warn('PWA initial cache warning:', err);
       });
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
-// Activate: Clean up older caches
+// Activate: Immediately purge all old caches and take control of all clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -34,24 +35,31 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: Stale-while-revalidate for speed & offline reliability
+// Fetch: Strategy depending on request type
 self.addEventListener('fetch', (event) => {
   // Only handle GET requests and http/https schemes
   if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) {
     return;
   }
 
-  // Next.js hot reload / dev socket bypass
-  if (event.request.url.includes('/_next/webpack-hmr') || event.request.url.includes('hot-update')) {
+  const url = new URL(event.request.url);
+
+  // 1. Bypass all Next.js hot reload / dev / Turbopack / HMR socket connections
+  if (
+    url.pathname.includes('/_next/webpack-hmr') ||
+    url.pathname.includes('hot-update') ||
+    url.pathname.includes('/_next/static/development')
+  ) {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request)
+  // 2. Navigation requests (HTML documents): Always Network-First
+  // Prevents serving stale HTML or mismatched script tags that break React hydration
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
         .then((networkResponse) => {
-          // Cache successful responses for future offline use
-          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          if (networkResponse && networkResponse.status === 200) {
             const responseToCache = networkResponse.clone();
             caches.open(CACHE_NAME).then((cache) => {
               cache.put(event.request, responseToCache);
@@ -59,12 +67,45 @@ self.addEventListener('fetch', (event) => {
           }
           return networkResponse;
         })
-        .catch(() => {
-          // Network failed, fallback to cached response if available
-          return cachedResponse;
-        });
+        .catch(() => caches.match(event.request).then((res) => res || caches.match('/')))
+    );
+    return;
+  }
 
-      return cachedResponse || fetchPromise;
+  // 3. Next.js Static JS/CSS chunks: Network-First with cache fallback
+  // Ensures updated code bundles are fetched immediately without serving stale chunks
+  if (url.pathname.startsWith('/_next/static/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // 4. Static media (exercises GIFs, icons, images): Cache-First for instant playback
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      });
     })
   );
 });

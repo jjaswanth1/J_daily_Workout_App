@@ -164,7 +164,7 @@ export function DashboardView({
 
                 {/* Dropdown Content: Revealed on Demand */}
                 {isExpanded && (
-                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid rgba(0, 0, 0, 0.05)', background: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
                     {/* Real 3D Muscular Body Animation & Stress Heatmap */}
                     <div style={{ marginTop: '12px' }}>
                       <HumanExerciseVisualizer
@@ -285,7 +285,7 @@ export function DashboardView({
 
         {/* Nutrition Dropdown */}
         {isNutritionExpanded && (
-          <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '12px' }}>
               <button
                 type="button"
@@ -345,7 +345,7 @@ export function DashboardView({
 
         {/* Schedule Dropdown (All night-shift slots preserved) */}
         {isScheduleExpanded && (
-          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '10px' }}>
               {DAILY_TIME_SPLIT.map((slot, sIdx) => {
                 const isCurrent = slot.time === activeSlot.time;

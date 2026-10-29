@@ -75,9 +75,9 @@ export function LibraryView() {
               onClick={() => setSelectedCategory(cat)}
               style={{
                 flex: '0 0 auto',
-                background: isSelected ? '#FFFFFF' : 'var(--bg-card)',
-                color: isSelected ? '#000000' : 'var(--text-secondary)',
-                border: isSelected ? '1px solid #FFFFFF' : '1px solid var(--border-subtle)',
+                background: isSelected ? 'var(--text-primary)' : 'var(--bg-card)',
+                color: isSelected ? 'var(--bg-shell)' : 'var(--text-secondary)',
+                border: isSelected ? '1px solid var(--text-primary)' : '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-pill)',
                 padding: '6px 14px',
                 fontSize: '0.74rem',
@@ -111,7 +111,7 @@ export function LibraryView() {
         </div>
 
         {showHowToRead && (
-          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
               <div style={{ background: 'var(--bg-subcard)', padding: '10px 12px', borderRadius: '10px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
                 <strong style={{ color: 'var(--text-primary)' }}>Squats 3x15:</strong> 15 squats (Set 1) → Rest 60-90s → Repeat 15 (Set 2) → Rest → Repeat 15 (Set 3). Total 45 reps done in 3 rounds.
@@ -185,7 +185,7 @@ export function LibraryView() {
 
                 {/* Dropdown Content */}
                 {isExpanded && (
-                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
                     <div style={{ marginTop: '12px' }}>
                       <HumanExerciseVisualizer
                         exerciseId={exercise.id}
@@ -261,7 +261,7 @@ export function LibraryView() {
         </div>
 
         {showChannels && (
-          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
               {TRUSTED_CHANNELS.map(ch => (
                 <a

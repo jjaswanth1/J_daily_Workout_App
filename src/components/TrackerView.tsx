@@ -84,9 +84,9 @@ export function TrackerView({
                 flex: '0 0 auto',
                 padding: '8px 14px',
                 borderRadius: 'var(--radius-pill)',
-                background: isSelected ? '#FFFFFF' : 'var(--bg-card)',
-                color: isSelected ? '#000000' : 'var(--text-secondary)',
-                border: isSelected ? '1px solid #FFFFFF' : '1px solid var(--border-subtle)',
+                background: isSelected ? 'var(--btn-primary-bg)' : 'var(--bg-card)',
+                color: isSelected ? 'var(--btn-primary-text)' : 'var(--text-secondary)',
+                border: isSelected ? '1px solid var(--btn-primary-bg)' : '1px solid var(--border-subtle)',
                 cursor: 'pointer',
                 textAlign: 'center',
                 transition: 'all 0.15s ease'
@@ -123,7 +123,7 @@ export function TrackerView({
         </div>
 
         {showPhaseInfo && (
-          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.45)' }}>
+          <div style={{ padding: '0 16px 14px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: '10px' }}>
               <strong style={{ color: 'var(--text-primary)' }}>Phase Focus: </strong>{currentProgramWeek.phaseGoal}
             </p>
@@ -202,9 +202,9 @@ export function TrackerView({
                           width: '32px',
                           height: '32px',
                           borderRadius: '50%',
-                          background: '#FFFFFF',
+                          background: 'var(--btn-primary-bg)',
                           border: 'none',
-                          color: '#000000',
+                          color: 'var(--btn-primary-text)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -228,7 +228,7 @@ export function TrackerView({
 
                 {/* Day Expanded Breakdown */}
                 {isExpanded && (
-                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ padding: '0 16px 16px 16px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-subcard)' }}>
                     <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.35, marginTop: '10px' }}>
                       {dayData.summary}
                     </p>

@@ -254,8 +254,9 @@ const EXERCISE_GIF_MAP: Record<string, string> = {
   'push-ups': '/exercises/push-ups.gif',
   'decline-push-ups': '/exercises/decline-push-ups.gif',
   'incline-push-ups': '/exercises/incline-push-ups.gif',
+  'diamond-push-ups': '/exercises/diamond-push-ups.gif',
   'reverse-grip-push-ups': '/exercises/reverse-grip-push-ups.gif',
-  'pike-push-ups': '/exercises/decline-push-ups.gif',
+  'pike-push-ups': '/exercises/pike-push-ups.gif',
   'squats': '/exercises/squats.gif',
   'jump-squats': '/exercises/jump-squats.gif',
   'bulgarian-split-squats': '/exercises/bulgarian-split-squats.gif',
@@ -274,10 +275,10 @@ const EXERCISE_GIF_MAP: Record<string, string> = {
   'wall-angels': '/exercises/wall-angels.gif',
   'skipping': '/exercises/skipping.gif',
   'cobra-stretch': '/exercises/cobra-stretch.gif',
-  'cat-cow': '/exercises/cobra-stretch.gif',
+  'cat-cow': '/exercises/cat-cow.gif',
   'dead-hang': '/exercises/dead-hang.gif',
-  'forward-fold': '/exercises/glute-bridges.gif',
-  'standing-side-reach': '/exercises/wall-angels.gif'
+  'forward-fold': '/exercises/forward-fold.gif',
+  'standing-side-reach': '/exercises/standing-side-reach.gif'
 };
 
 export function HumanExerciseVisualizer({
@@ -293,9 +294,10 @@ export function HumanExerciseVisualizer({
 
   // Anatomical Body Diagram (Front & Back Muscle Heatmap)
   const renderAnatomicalBodyMap = () => {
-    const inactiveFill = '#E5E5EA';
-    const inactiveStroke = '#D1D1D6';
-    const activeFill = '#FF2D55';
+    const isDark = typeof document !== 'undefined' && (document.documentElement.getAttribute('data-theme') === 'black' || document.documentElement.getAttribute('data-theme') === 'dark');
+    const inactiveFill = isDark ? '#2C2C2E' : '#E5E5EA';
+    const inactiveStroke = isDark ? '#3A3A3C' : '#D1D1D6';
+    const activeFill = 'var(--accent-red)';
     const activeStroke = '#E02449';
 
     return (
@@ -507,7 +509,7 @@ export function HumanExerciseVisualizer({
   };
 
   return (
-    <div style={{ background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'var(--glass-blur)', border: '1px solid rgba(255, 255, 255, 0.95)', borderRadius: '18px', padding: compact ? '10px' : '14px', boxShadow: '0 8px 24px rgba(0,0,0,0.03)' }}>
+    <div style={{ background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)', border: 'var(--border-glass)', borderRadius: '18px', padding: compact ? '10px' : '14px', boxShadow: 'var(--glass-shadow)' }}>
       {/* Top Header & Mode Toggle */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -522,7 +524,7 @@ export function HumanExerciseVisualizer({
           onClick={() => setViewMode(viewMode === 'animation' ? 'stress_map' : 'animation')}
           style={{
             background: 'var(--bg-subcard)',
-            border: '1px solid rgba(0,0,0,0.06)',
+            border: '1px solid var(--border-subtle)',
             color: 'var(--text-primary)',
             borderRadius: 'var(--radius-pill)',
             padding: '5px 12px',
@@ -539,8 +541,8 @@ export function HumanExerciseVisualizer({
         </button>
       </div>
 
-      {/* Main Visualizer Frame (Apple Clean Matte Card) */}
-      <div style={{ background: '#FFFFFF', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.06)', overflow: 'hidden', position: 'relative', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+      {/* Main Visualizer Frame (Clean Matte Card) */}
+      <div style={{ background: '#FFFFFF', borderRadius: '14px', border: '1px solid var(--border-subtle)', overflow: 'hidden', position: 'relative', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
         {viewMode === 'animation' ? (
           <div style={{ position: 'relative', width: '100%', minHeight: compact ? '140px' : '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px 8px' }}>
             <img
@@ -560,31 +562,31 @@ export function HumanExerciseVisualizer({
               position: 'absolute',
               top: '8px',
               left: '8px',
-              background: 'rgba(255, 255, 255, 0.88)',
+              background: 'rgba(0, 0, 0, 0.72)',
               backdropFilter: 'blur(10px)',
               padding: '3px 9px',
               borderRadius: '9999px',
               display: 'flex',
               alignItems: 'center',
               gap: '5px',
-              border: '1px solid rgba(0,0,0,0.06)',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
             }}>
               <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent-red)' }} />
-              <span style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>
+              <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '0.04em' }}>
                 MUSCULAR LOOP
               </span>
             </div>
           </div>
         ) : (
-          <div style={{ background: '#FFFFFF', padding: '8px 0' }}>
+          <div style={{ background: 'var(--bg-subcard)', padding: '8px 0' }}>
             {renderAnatomicalBodyMap()}
           </div>
         )}
       </div>
 
       {/* Muscle Stress Details */}
-      <div style={{ marginTop: '12px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '10px' }}>
+      <div style={{ marginTop: '12px', borderTop: '1px solid var(--border-subtle)', paddingTop: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--accent-red)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             PRIMARY TENSION:

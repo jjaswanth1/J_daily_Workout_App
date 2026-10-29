@@ -35,13 +35,31 @@ export const metadata: Metadata = {
   }
 };
 
+const themeScript = `
+  try {
+    var saved = localStorage.getItem('titan_theme');
+    if (saved === 'black' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'black');
+    } else if (saved === 'white' || saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'white');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'black');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'white');
+    }
+  } catch(e) {}
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <PwaManager />
         {children}
