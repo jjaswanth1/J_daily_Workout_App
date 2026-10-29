@@ -1,0 +1,32 @@
+{
+  "name": "TITAN Recomp — Home Body Transformation",
+  "short_name": "TITAN",
+  "description": "Night-shift optimized 10-week body transformation, 3D exercise coach, spine decompression & nutrition companion.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
+  "orientation": "portrait-primary",
+  "background_color": "#F5F5F7",
+  "theme_color": "#F5F5F7",
+  "categories": ["fitness", "health", "sports", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
